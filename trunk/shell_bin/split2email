@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+
+FILE2SPLIT=$1
+ITER=$2
+PREFIX=$3
+
+PREFIX_FINAL=$4
+
+echo "Quebrando lista de `wc -l $FILE2SPLIT | gawk '{print $1}'` emails em arquivos menores de $ITER cada, separado por , (virgula) "
+
+split -l $ITER -a 3 $FILE2SPLIT $PREFIX
+echo "split -l $ITER -a 3 $FILE2SPLIT $PREFIX"
+ 
+for arq in $PREFIX*; do splitEach $arq $PREFIX_FINAL"_"$arq ; done 

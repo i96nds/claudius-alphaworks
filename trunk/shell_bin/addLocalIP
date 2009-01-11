@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sudo ifconfig -a $1 add 192.168.1.10  netmask 255.255.255.0 
+sudo ifconfig -a $1:0 broadcast 192.168.1.255
+
