@@ -1,0 +1,5 @@
+#!/bin/sh
+
+line=`echo $1+10|bc`
+
+head -$line $2 |tail -20

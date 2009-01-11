@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# NOME_ARQUIVOção dos arquivos
+NOME_ARQUIVO=panzer-backup
+
+# Onde os arquivos de backup e logs ficarão armazenados
+DIR_DESTINO=/home/claudio/backup
+
+# A partir de onde ficarão os arquivos
+PREFIX=$DIR_DESTINO/conf
+
+
+# Lista de arquivos a não terem backup
+EXCLUDE=$PREFIX/etc/exclude.list
+
+# Arquivos temporário do script
+TEMP=/tmp/.backup.$$
+
+# Formato da data
+DATA=$(date +%Y-%m-%d"_"%H.%M.%S)
+
+# Arquivo com a lista de diretórios a terem backup
+LISTA=$(cat $PREFIX/etc/list.conf | grep ^\/ | sort | uniq)
+
+DESTINO=$DIR_DESTINO/$NOME_ARQUIVO-$DATA
+
+df -h > $DESTINO.log
+tar --totals --ignore-failed-read --exclude-from=$EXCLUDE -jcvf $DESTINO.tar.bz2 $LISTA | tee $DESTINO.log
+df -h >> $DESTINO.log
+

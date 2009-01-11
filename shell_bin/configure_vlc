@@ -1,0 +1,1 @@
+./configure --prefix /usr/local/ --enable-mozilla --enable-alsa --enable-dc1394 --enable-dv --enable-dvdread --enable-dvdnav --enable-v4l2 --enable-libv4l2 --enable-screen --enable-ogg --enable-mkv --enable-avcodec --enable-avformat  --enable-real --enable-realrtsp --enable-libmpeg2 --enable-vorbis --enable-theora --enable-x264 --enable-snapshot
