@@ -5,7 +5,10 @@
 # libdbus-1-dev
 # libdbus-glib-1-dev
 # libperl-dev
-# libnss3-dev libgnutls-dev
+# libnss3-dev 
+# libgnutls-dev
+# libstartup-notification0-dev
+# libavahi-glib-dev libavahi-core-dev libavahi-client-dev libavahi-common-dev
 #
 
-./configure --prefix=/usr/local --enable-dbus --disable-silc --enable-gnutls=yes --disable-startup-notification --disable-meanwhile --disable-avahi  --disable-nm --disable-tcl --with-dbus-services=/usr/share/dbus-1/services/
+./configure --prefix=/usr/local --enable-dbus --disable-silc --enable-gnutls=yes --disable-meanwhile --disable-nm --disable-tcl --with-dbus-services=/usr/share/dbus-1/services/
