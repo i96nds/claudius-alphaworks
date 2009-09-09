@@ -21,13 +21,23 @@ echo "========================================================"
 echo "The number of threads is displayed under the column NLWP"
 echo "========================================================"
 
+PROCESS_ID=$1
+COLUMNS=140
+
+DELAY=3
+if [ $# -gt 1 ] ; then
+    DELAY=$2
+    shift
+fi
+
+DEFAULT_COUNT=1
 COUNT=1
 if [ $# -gt 1 ] ; then
     COUNT=$2
+    DEFAULT_COUNT=0
 fi
 
 PATTERN=`echo $1 | sed 's/[0-9]//g'`
-PROCESS_ID=$1
 
 if [ ! -z $PATTERN  ] ; then
     # string
@@ -35,19 +45,15 @@ if [ ! -z $PATTERN  ] ; then
     echo "The PID to lookup is: "$PROCESS_ID
 fi
 
-CMD="ps -p $PROCESS_ID -o pid,user,%cpu,rss,vsize,size,etime,nlwp,args"
-CMD2="ps -p $PROCESS_ID h -o pid,user,%cpu,rss,vsize,size,etime,nlwp,args"
+CMD="COLUMNS=$COLUMNS ps -p $PROCESS_ID -o pid,lwp,%cpu,s,rss,vsize,size,etime,nlwp,args"
+CMD2="COLUMNS=$COLUMNS ps -p $PROCESS_ID h -o pid,lwp,%cpu,s,rss,vsize,size,etime,nlwp,args"
 
-#echo "PATTERN = $PATTERN"
-#echo "PROCESS_ID = $PROCESS_ID"
-#echo "COUNT = $COUNT"
-#echo "CMD = $CMD"
 PATTERN=`echo $PROCESS_ID | sed 's/\ /@/g' | sed 's/[0-9]//g'`
-
+n=0
 HEADER_COUNT=15
 if [ -z $PATTERN ] ; then
-    if [ $COUNT -gt 1 ] ; then
-        for n in `seq 1 $COUNT`; do 
+    if [ $COUNT -ge 1 ] ; then
+        while [ $n -lt $COUNT ] ; do
             PROCESS_ID=`ps -e |awk '{print $1}' | grep $PROCESS_ID`
             if [ -z $PROCESS_ID  ] ; then
                 echo "The monitored PID no longer exists. Exiting."
@@ -57,15 +63,20 @@ if [ -z $PATTERN ] ; then
                 HEADER_COUNT=15
             fi
             if [ $HEADER_COUNT == 15 ]; then
-                eval $CMD
+                eval $CMD|awk '{now=strftime("%Y-%m-%d %T  "); print now $0}'
             else
-                eval $CMD2
+                eval $CMD2|awk '{now=strftime("%Y-%m-%d %T  "); print now $0}'
             fi
-            HEADER_COUNT=`echo $HEADER_COUNT-1 | bc`
-            sleep 1;
+            HEADER_COUNT=$(expr $HEADER_COUNT - 1)
+            if [ $DEFAULT_COUNT -eq 1 ] ; then
+                n=0
+            else 
+                n=$(expr $n + 1)
+            fi
+            if [ $n -lt $COUNT ] ; then
+                sleep $DELAY
+            fi
         done
-    else
-        eval $CMD
     fi
 else
     echo "The keyword \"$1\" return more than one PID. Please consider constraining the keyword"
