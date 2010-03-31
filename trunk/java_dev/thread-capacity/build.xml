@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<project name="thread-capacity" xmlns:ivy="antlib:org.apache.ivy.ant" >
+<project name="thread-capacity" default="run" xmlns:ivy="antlib:org.apache.ivy.ant" >
 
     <description>Project thread capacity</description>
     <property file="build.properties" />
@@ -11,6 +11,9 @@
     <property name="src.dir" value="src/java" />
 	<ivy:settings file="ivysettings.xml" />
 	<ivy:settings file="${user.home}/.ivy2/ivysettings.xml" />
+	
+	<property name="num_threads" value="1500" />
+	<property name="oper_repeat" value="100" />
     
     <!-- paths used for compilation and run  -->
     <path id="lib.path.id">
@@ -35,6 +38,21 @@
     <target name="clean" description="==> Cleans away all generated files.">
         <delete dir="${build.dir}" />
         <delete dir="${dist.dir}" />
+    </target>
+	
+	<target name="run" depends="compile" description="==> Run the application.">
+		<echo>How to input the parameter values:
+			
+			ant run -Dnum_threads=100 -Doper_repeat=1
+		</echo>
+		<echo message="Default parameters: -Xss32k -Xmx1g" />
+        <java classpath="${classes.dir}:${src.dir}" classname="br.com.claudius.threads.NumThreads">
+        	<jvmarg value="-Xss24k"/>
+        	<jvmarg value="-Xmx2g"/>
+        	<jvmarg value="-Xmn1500m"/>
+        	<arg value="${num_threads}"/>
+        	<arg value="${oper_repeat}"/>
+    	</java>
     </target>
 	
     <target name="dist" depends="compile" description="==> Constructs the WAR file">
