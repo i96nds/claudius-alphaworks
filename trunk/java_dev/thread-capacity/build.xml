@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="thread-capacity" xmlns:ivy="antlib:org.apache.ivy.ant" >
+
+    <description>Project thread capacity</description>
+    <property file="build.properties" />
+    <property name="lib.dir" value="lib" />
+    <property name="build.dir" value="build" />
+	<property name="classes.dir" value="${build.dir}/WEB-INF/classes" />
+    <property name="dist.dir" value="dist" />
+    <property name="src.dir" value="src/java" />
+	<ivy:settings file="ivysettings.xml" />
+	<ivy:settings file="${user.home}/.ivy2/ivysettings.xml" />
+    
+    <!-- paths used for compilation and run  -->
+    <path id="lib.path.id">
+        <fileset dir="${lib.dir}" />
+    </path>
+    
+    <target name="resolve-classpath" >
+        <echo message="Project ${ant.project.name}" />
+        <ivy:resolve conf="compile" />
+        <ivy:cachepath pathid="compile.classpath" conf="compile" />
+    </target>
+    
+    <target name="compile" depends="resolve-classpath" description="==> Compiles the source code.">
+        <mkdir dir="${classes.dir}" />
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" debug="on" optimize="on" 
+            encoding="${source.encoding}" source="1.5" target="1.5">
+            <classpath refid="compile.classpath" />
+        </javac>
+    </target>
+
+    <!-- Removes the build directory and the tests build directory -->
+    <target name="clean" description="==> Cleans away all generated files.">
+        <delete dir="${build.dir}" />
+        <delete dir="${dist.dir}" />
+    </target>
+	
+    <target name="dist" depends="compile" description="==> Constructs the WAR file">
+    	<mkdir dir="${dist.dir}" />
+    	<war warfile="${dist.dir}/${ant.project.name}-${version}.war" basedir="web"
+    		webxml="web/WEB-INF/web.xml">
+    		<classes dir="${classes.dir}" />
+    	</war>
+        
+    </target>
+	
+</project>

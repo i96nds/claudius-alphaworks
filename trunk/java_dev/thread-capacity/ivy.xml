@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+    <info module="thread-capacity" organisation="claudius" revision="${version}"/>
+    <configurations >
+        <conf name="runtime" transitive="false" />
+        <conf name="compile" extends="runtime"/>
+    </configurations>
+    <publications>
+        <artifact name="${ant.project.name}"  type="jar" ext="jar" />
+        <artifact name="${ant.project.name}"  type="source" ext="jar" m:classifier="sources"/>
+    </publications>
+    <dependencies defaultconf="compile->*">
+        <!-- Keep those tags organized and aligned -->
+        <dependency org="javax.servlet"     name="servlet-api"      rev="2.5"   conf="compile->*"/>
+    </dependencies>
+</ivy-module>
+
