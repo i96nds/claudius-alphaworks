@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivysettings>
+    <properties file="ivysettings.properties" />
+    <settings defaultResolver="default" />
+    <resolvers>
+        <ibiblio name="default" m2compatible="true" />
+        <ibiblio name="mvn-repo"       root="http://repo2.maven.org/maven2/" m2compatible="true" />
+        <ibiblio name="mvn2-java.net"  root="http://download.java.net/maven/2/" m2compatible="true" />
+        <ibiblio name="jboss"          root="http://repository.jboss.com/maven2/" m2compatible="true" />
+        <ibiblio name="mvn1-java.net"  root="http://download.java.net/maven/1/"
+                 pattern="[organisation]/[type]s/[artifact]-[revision].[ext]"/>
+    </resolvers>
+    <caches checkUpToDate="true" useOrigin="true"/>
+</ivysettings>
