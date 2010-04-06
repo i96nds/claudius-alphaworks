@@ -45,13 +45,14 @@
 			
 			ant run -Dnum_threads=100 -Doper_repeat=1
 		</echo>
-		<echo message="Default parameters: -Xss32k -Xmx1g" />
+		<echo message="Default parameters: -Xss24k -Xmx1500m" />
         <java classpath="${classes.dir}:${src.dir}" classname="br.com.claudius.threads.NumThreads">
         	<jvmarg value="-Xss24k"/>
         	<jvmarg value="-Xmx2g"/>
         	<jvmarg value="-Xmn1500m"/>
         	<arg value="${num_threads}"/>
         	<arg value="${oper_repeat}"/>
+        	<arg value="${pause_before}"/>
     	</java>
     </target>
 	

@@ -18,6 +18,9 @@ public class NumThreads {
     public static PrintStream psout = System.out;
     public static ResourceBundle bundle = ResourceBundle.getBundle("br/com/claudius/threads/messages", Locale.getDefault());
     public static int repeat = 100;
+    // pause (seconds) before the test begin
+    // this is to let the user connect some sort of tool before the test.
+    public static int pause_before = 1;
     
     public static void main(String[] a) throws Exception {
         // default number of threads to create if none is specified at command line
@@ -26,8 +29,9 @@ public class NumThreads {
         if (a.length > 0) {
             n = Integer.parseInt(a[0]);
         }
-        if (a.length == 2) {
+        if (a.length == 3) {
             repeat = Integer.parseInt(a[1]);
+            pause_before = Integer.parseInt(a[2]);
         }
         
         StringBuffer sb = new StringBuffer(CR);
@@ -48,6 +52,10 @@ public class NumThreads {
         sb = new StringBuffer(bundle.getString("msg.04"));
         sb.append(CR).append(bundle.getString("msg.05")).append(CR);
         print(sb.toString());
+        
+        if (pause_before > 0) {
+        	Thread.sleep(1000 * pause_before);
+        }
         
         // all threads must start to work when all threads objects is ready to run
         CyclicBarrier barrier = new CyclicBarrier(n);
