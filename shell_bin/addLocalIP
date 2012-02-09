@@ -1,5 +1,21 @@
 #!/bin/sh
 
-sudo ifconfig -a $1 add 192.168.1.10  netmask 255.255.255.0 
-sudo ifconfig -a $1:0 broadcast 192.168.1.255
+IFACE=$1
+
+LAST_IFACE=`ifconfig|grep $IFACE|awk '{print $1}' | tail -1`
+HAS_ALIAS=`ifconfig|grep $IFACE|awk '{print $1}' | tail -1 | grep ':'`
+if [ "$HAS_ALIAS"  ] ; then
+#    echo  "alias => $HAS_ALIAS"
+    NUM=`echo $LAST_IFACE| sed -e 's/.*[a-zA-Z]//g' -e  's/.://g' `
+#    echo "NUM = $NUM"
+    NUM=`echo $NUM+1|bc`
+#    echo "next NUM = $NUM"
+else
+#    echo  "iface => $LAST_IFACE"
+    NUM=0
+fi
+
+sudo ifconfig  "$1":"$NUM" 192.168.1.1$NUM  netmask 255.255.255.0  up
+#sudo ifconfig -a $1 add 192.168.1.11  netmask 255.255.255.0 
+#sudo ifconfig -a $1:0 broadcast 192.168.1.255
 

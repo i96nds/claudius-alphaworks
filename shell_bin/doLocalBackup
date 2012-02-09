@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # NOME_ARQUIVOção dos arquivos
-NOME_ARQUIVO=foxhound-backup
+NOME_ARQUIVO=zhukov-backup
 
 # Onde os arquivos de backup e logs ficarão armazenados
 DIR_DESTINO=/home/claudio/backup
