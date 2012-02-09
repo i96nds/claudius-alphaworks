@@ -14,7 +14,7 @@ top_number=$((top_number+1))
 
 java_stack=`jstack -l $PID` 
 # mostrar apenas o cabecalho
-top=`top -s -b -H -p $PID -n 1 | grep -vE '^top|^Tasks|^Cpu|^Mem|^Swap' | grep -v '^$' | awk 'NR==1; NR > 1 {print $0 | "sort  -nrk 9"}' | head -$top_number`
+top=`top -s -b -H -p $PID -n 1 | grep -vE '^top|^Tasks|^Cpu|^Mem|^Swap|^$' | awk 'NR==1; NR > 1 {print $0 | "sort  -nrk 9"}' | head -$top_number`
 echo $top
 
 echo $top | while read psline; do 
