@@ -1,4 +1,5 @@
 #!/bin/bash
+# por claudio@claudius.com.br
 
 usage="Uso:        findJavaClass directory ClassName   "
 IFS='
