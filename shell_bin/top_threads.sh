@@ -1,4 +1,7 @@
 #!/bin/bash
+# script top_thread.sh criado por claudio@claudius.com.br
+# 09/02/2012 - criacao do script
+
 
 PID=$1
 IFS=''
