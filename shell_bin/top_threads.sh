@@ -1,7 +1,9 @@
 #!/bin/bash
-# script top_thread.sh criado por claudio@claudius.com.br
-# 09/02/2012 - criacao do script
+# script top_thread.sh by claudio@claudius.com.br
+# 09/02/2012 - script creation
 
+# put your JAVA_HOME here, 
+JAVA_HOME=/opt/javavm
 
 PID=$1
 IFS=''
@@ -12,8 +14,8 @@ fi
 
 top_number=$((top_number+1))
 
-java_stack=`jstack -l $PID` 
-# mostrar apenas o cabecalho
+java_stack=`$JAVA_HOME/bin/jstack -l $PID` 
+
 top=`top -s -b -H -p $PID -n 1 | grep -vE '^top|^Tasks|^Cpu|^Mem|^Swap|^$' | awk 'NR==1; NR > 1 {print $0 | "sort  -nrk 9"}' | head -$top_number`
 echo $top
 
