@@ -1,7 +1,7 @@
 #!/bin/bash
 # por claudio@claudius.com.br
 
-usage="Uso:        findJavaClass directory ClassName   "
+usage="Uso:       $0 directory ClassName   "
 IFS='
 '
 dir=${1}
@@ -12,16 +12,16 @@ if [ $# -lt 2 ] ; then
     exit 1
 fi
 
-if [ ! -d "$dir" ] ; then
+if [ ! -d "$path" ] ; then
     echo "Diretorio nao existe"
     exit 1    
-#elif [ -e "$dir" ] ; then
-#    unzip -l "$dir" | grep --color "$class"
+#elif [ -e "$path" ] ; then
+#    unzip -l "$path" | grep --color "$class"
 #    exit
 fi
 
-if [ -d $dir ] ; then
-  find -L "$dir" -type f  -name \*ar | while read jar_file ; 
+if [ -d $path ] ; then
+  find -L "$path" -type f  -name \*ar | while read jar_file ; 
   do
       found_class=`unzip -l $jar_file | awk '{print $4}' | grep $class`
       num_classes=`echo $found_class | wc -c`
@@ -35,7 +35,7 @@ if [ -d $dir ] ; then
   done
 
   echo ""
-  find -L $dir -wholename \*$class\* | grep --color  $class
+  find -L $path -wholename \*$class\* | grep --color  $class
 
 fi
 
