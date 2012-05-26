@@ -11,9 +11,9 @@ while read psline; do
   etime=`echo $info_prc|awk '{print $2}'`
   rss=`echo $info_prc|awk '{print $3}'`
   echo "$pid - $prc_name ($nlwp threads, elapsed time $etime, RSS memory $(($rss/1024)) MB)"
-  jinfo $pid 2>&1|grep -E 'jboss.server.log.dir|jboss.home.dir'| sort|awk '{print "\t"$3}'
+  jinfo $pid 2>&1|grep -E '^jboss.server.log.dir|^jboss.home.dir'| sort|awk '{print "\t"$3}'
   echo ""
-  sudo netstat -antpuew | grep -E "$pid/java" | grep LISTEN | awk '{print "\t"$1" "$4}'
+  sudo netstat -antpuew | grep -E "$pid/java" | grep LISTEN | awk '{print "\t"$1" "$4}' | sort
   echo ""
 done  
 
@@ -32,8 +32,8 @@ while read psline; do
   etime=`echo $info_prc|awk '{print $2}'`
   rss=`echo $info_prc|awk '{print $3}'`
   echo "$pid - $prc_name ($nlwp threads, elapsed time $etime, RSS memory $(($rss/1024)) MB)"
-  jinfo $pid 2>&1|grep -E 'jboss.server.log.dir|jboss.server.base.dir'| sort|awk '{print "\t"$3}'
+  jinfo $pid 2>&1|grep -E '^jboss.server.log.dir|^jboss.server.base.dir'| sort|awk '{print "\t"$3}'
   echo ""
-  sudo netstat -antpuew | grep -E "$pid/java" | grep LISTEN | awk '{print "\t"$1" "$4}'
+  sudo netstat -antpuew | grep -E "$pid/java" | grep LISTEN | awk '{print "\t"$1" "$4}' | sort
   echo ""
 done

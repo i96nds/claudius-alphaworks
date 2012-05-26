@@ -45,8 +45,8 @@ if [ ! -z $PATTERN  ] ; then
     echo "The PID to lookup is: "$PROCESS_ID
 fi
 
-CMD="COLUMNS=$COLUMNS ps -p $PROCESS_ID -o pid,lwp,%cpu,s,rss,vsize,size,etime,nlwp,args"
-CMD2="COLUMNS=$COLUMNS ps -p $PROCESS_ID h -o pid,lwp,%cpu,s,rss,vsize,size,etime,nlwp,args"
+CMD="COLUMNS=$COLUMNS  ps -p $PROCESS_ID   -o pid,%cpu,rss,etime,nlwp,args"
+CMD2="COLUMNS=$COLUMNS ps -p $PROCESS_ID h -o pid,%cpu,rss,etime,nlwp,args"
 
 PATTERN=`echo $PROCESS_ID | sed 's/\ /@/g' | sed 's/[0-9]//g'`
 n=0
