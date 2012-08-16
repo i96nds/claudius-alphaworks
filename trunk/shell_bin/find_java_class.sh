@@ -4,7 +4,7 @@
 usage="Uso:       $0 directory ClassName   "
 IFS='
 '
-dir=${1}
+path=${1}
 class=$2
 
 if [ $# -lt 2 ] ; then
