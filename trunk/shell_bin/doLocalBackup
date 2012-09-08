@@ -22,9 +22,16 @@ DATA=$(date +%Y-%m-%d"_"%H.%M.%S)
 # Arquivo com a lista de diretórios a terem backup
 LISTA=$(cat $PREFIX/etc/list.conf | grep ^\/ | sort | uniq)
 
+# verificar tamanho atual
+cat $PREFIX/etc/list.conf | xargs du -hcs | grep M
+echo ""
+echo "Continuar o backup (ctrl+c cancela) ? "
+read
+
 DESTINO=$DIR_DESTINO/$NOME_ARQUIVO-$DATA
 
 df -h > $DESTINO.log
 tar --totals --ignore-failed-read --exclude-from=$EXCLUDE -jcvf $DESTINO.tar.bz2 $LISTA | tee $DESTINO.log
+ls -l $DESTINO.tar.bz2 >> $DESTINO.log
 df -h >> $DESTINO.log
 
