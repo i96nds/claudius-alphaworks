@@ -32,6 +32,7 @@ DESTINO=$DIR_DESTINO/$NOME_ARQUIVO-$DATA
 
 df -h > $DESTINO.log
 tar --totals --ignore-failed-read --exclude-from=$EXCLUDE -jcvf $DESTINO.tar.bz2 $LISTA | tee $DESTINO.log
-ls -l $DESTINO.tar.bz2 >> $DESTINO.log
+ls -l $DESTINO.tar.bz2 | tee -a $DESTINO.log
+du -hcs $DESTINO.tar.bz2 | tee -a $DESTINO.log
 df -h >> $DESTINO.log
 
