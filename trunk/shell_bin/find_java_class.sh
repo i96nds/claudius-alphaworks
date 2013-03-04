@@ -5,7 +5,7 @@ usage="Uso:       $0 directory ClassName   "
 IFS='
 '
 path=${1}
-class=$2
+class=`echo $2 |sed 's/\./\//g'`
 
 if [ $# -lt 2 ] ; then
     echo $usage
