@@ -5,7 +5,9 @@ usage="Uso:       $0 directory ClassName   "
 IFS='
 '
 path=${1}
+class=`echo $2 |sed 's/\.class/CLASS/g'`
 class=`echo $2 |sed 's/\./\//g'`
+class=`echo $2 |sed 's/CLASS/\.class/g'`
 
 if [ $# -lt 2 ] ; then
     echo $usage
@@ -38,5 +40,6 @@ if [ -d $path ] ; then
   find -L $path -wholename \*$class\* | grep --color  $class
 
 fi
+
 
 
